@@ -2,9 +2,19 @@
 
 Twelve original procedural forms for real AI activity. Use an orb as a compact, recognizable signal alongside useful text. The gallery preview and downloadable component share `src/veyl.js`.
 
-## Install locally
+## Install
 
-Copy `src/veyl.js` into your app. The package is not published to npm; there is no `npm install` command yet.
+Install the published package and import it once from a client-side entry point:
+
+```bash
+npm install veyl.dev
+```
+
+```js
+import 'veyl.dev';
+```
+
+The import registers the `<veyl-signal>` custom element. For plain HTML without a bundler, download `src/veyl.js` and load it directly:
 
 ```html
 <script src="./veyl.js"></script>
@@ -46,14 +56,14 @@ Field systems add distinct rendering techniques: Reactor has separated containme
 
 ## React / SSR
 
-Load the component in the browser, never during server rendering. Copy the runtime into the project's source folder first.
+Load the component in the browser, never during server rendering. Import `veyl.dev` from a client-only entry point; if your framework evaluates modules on the server, dynamically import it after mount.
 
 ```jsx
 'use client';
 import { useEffect } from 'react';
 
 export function Activity({ state = 'thinking', label = 'Thinking' }) {
-  useEffect(() => { import('./veyl.js'); }, []);
+  useEffect(() => { import('veyl.dev'); }, []);
   return (
     <div role="status">
       <veyl-signal state={state} variant="reactor" size="32" aria-hidden="true" />
@@ -85,7 +95,7 @@ export default defineConfig({
 });
 ```
 
-Then load the local component file in the client entry point and bind the state:
+Import `veyl.dev` from the client entry point, then bind the state:
 
 ```html
 <veyl-signal :state="agentState" variant="reactor" size="32" aria-hidden="true"></veyl-signal>

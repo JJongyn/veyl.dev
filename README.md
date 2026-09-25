@@ -1,56 +1,63 @@
 # veyl.dev
 
-**Procedural signal orbs for AI products.** Twelve original forms, drawn live in Canvas and delivered as a native Web Component.
-
-[![MIT License](https://img.shields.io/badge/license-MIT-c7e8a6.svg)](LICENSE)
-[![No runtime dependencies](https://img.shields.io/badge/runtime_dependencies-none-202522.svg)](#)
-[![Web Component](https://img.shields.io/badge/API-Web_Component-202522.svg)](#quick-start)
+**A signal from the near future.** Twelve procedural Web Components that give real AI activity a distinct visual presence.
 
 <p align="center">
-  <img src="assets/veyl-gallery.jpg" alt="veyl.dev home page with the animated Echo signal orb" width="100%">
+  <img src="https://raw.githubusercontent.com/JJongyn/veyl.dev/master/assets/veyl-echo.gif" alt="Echo, Veyl's live signal orb scanning through a field of points" width="100%">
 </p>
 
-<p align="center"><em>12 forms. 6 meaningful agent states. One lightweight custom element.</em></p>
+<p align="center"><em>Echo · scanning a field of signals · rendered live in Canvas 2D</em></p>
 
-## What it is
+<p align="center">
+  <a href="https://www.npmjs.com/package/veyl.dev"><img src="https://img.shields.io/npm/v/veyl.dev?color=c7e8a6&label=npm" alt="npm version"></a>
+  <img src="https://img.shields.io/badge/runtime_dependencies-none-202522.svg" alt="No runtime dependencies">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-c7e8a6.svg" alt="MIT License"></a>
+</p>
 
-Veyl (pronounced “veil”) adds a small, expressive visual cue beside an AI agent's real activity. Its orbs are calculated and rendered in Canvas 2D in the browser. There are no bundled videos, image sequences, external rendering engines, or runtime dependencies.
+## In a real interface
 
-The library includes twelve distinct forms: six procedural filament forms and six more structured field systems. Each form has its own geometry and motion. Use `state` to represent what the host app is actually doing; choose `variant` separately to give the signal a visual identity.
+Veyl is designed to sit beside the status text your product already provides. The host application owns the activity; the orb gives it a visual form.
 
-## Quick start
+<p align="center">
+  <img src="https://raw.githubusercontent.com/JJongyn/veyl.dev/master/assets/veyl-in-context.png" alt="Veyl signal orbs beside assistant response and activity text in a chat interface" width="560">
+</p>
 
-Copy `src/veyl.js` into your app, then load it as a classic script:
+*Example conversation UI with composing and thinking signals. Connect `state` to your app's actual agent status; the component does not run or infer agent work.*
+
+## Install
+
+```bash
+npm install veyl.dev
+```
+
+Import the custom element once from your app's client entry point:
+
+```js
+import 'veyl.dev';
+```
+
+Then use it anywhere in your HTML or framework template:
 
 ```html
-<script src="./veyl.js"></script>
-
-<div role="status">
-  <veyl-signal
-    state="thinking"
-    variant="reactor"
-    size="32"
-    aria-hidden="true"
-  ></veyl-signal>
-  <span>Thinking through your request</span>
+<div role="status" aria-live="polite">
+  <veyl-signal state="searching" variant="echo" size="32" aria-hidden="true"></veyl-signal>
+  <span>Searching the web for useful sources</span>
 </div>
 ```
 
-Or start from the working example in [`examples/quick-start.html`](examples/quick-start.html). The full API, state guidance, and React/Vue notes are in the [integration guide](veyl.md).
+Veyl registers the `<veyl-signal>` custom element as an import side effect. In SSR frameworks, load it only in the browser/client entry point. For a no-bundler HTML setup, download [`src/veyl.js`](src/veyl.js) and load it with `<script src="./veyl.js"></script>`.
 
-### Try the gallery locally
+## Why Veyl
 
-```bash
-git clone https://github.com/JJongyn/veyl.dev.git
-cd veyl.dev
-python3 -m http.server 4174
-```
+- **Twelve distinct forms:** six field systems and six filament forms, each with its own motion and geometry.
+- **Meaningful states:** `thinking`, `searching`, `listening`, `composing`, `connecting`, and `complete` map to real work in your application.
+- **Independent appearance:** pick a `variant` without changing what the state means.
+- **Native and lightweight:** Canvas 2D Web Component, no runtime dependencies, no remote assets.
+- **Considerate motion:** supports reduced-motion preferences and pauses when hidden or offscreen.
 
-Open <http://localhost:4174>. No build step or package install is needed for the gallery.
+## Choose a form
 
-## The forms
-
-| Family | Form | What it looks like |
+| Family | Form | Character |
 | --- | --- | --- |
 | Field system | Reactor | Segmented containment plates around a radiant core |
 | Field system | Gyre | Three independently articulated gimbals |
@@ -66,65 +73,112 @@ Open <http://localhost:4174>. No build step or package install is needed for the
 | Filament | Bloom | A seven-lobed form resolving into a center |
 
 <p align="center">
-  <img src="assets/veyl-collection.jpg" alt="The Veyl collection, showing the distinct orbital and filament forms" width="420">
+  <img src="https://raw.githubusercontent.com/JJongyn/veyl.dev/master/assets/veyl-collection.jpg" alt="Twelve Veyl signal forms across field systems and filament families" width="560">
 </p>
 
-## API at a glance
+## States and variants
+
+`state` describes what the host app is doing. `variant` chooses the visual form. Keep those roles separate so the interface stays truthful and understandable.
+
+| `state` | Use it when | `auto` form |
+| --- | --- | --- |
+| `thinking` | The agent is reasoning or preparing an answer | Fold |
+| `searching` | The agent is retrieving or exploring information | Trace |
+| `listening` | The product is awaiting or processing user input | Tide |
+| `composing` | The agent is forming a response | Loom |
+| `connecting` | The agent is coordinating tools or joining information | Link |
+| `complete` | The task has finished | Bloom |
 
 ```html
 <veyl-signal
-  state="searching"
-  variant="echo"
+  state="composing"
+  variant="prism"
   size="64"
   speed="1.2"
   intensity="0.8"
-  interactive
+  theme="dark"
 ></veyl-signal>
 ```
 
 | Attribute | Values | Default | Purpose |
 | --- | --- | --- | --- |
-| `state` | `thinking`, `searching`, `listening`, `composing`, `connecting`, `complete` | `thinking` | The host agent's current activity |
-| `variant` | `auto` plus any of the 12 form names in lowercase | `auto` | The visual form, independent of activity |
+| `state` | `thinking`, `searching`, `listening`, `composing`, `connecting`, `complete` | `thinking` | Semantic activity supplied by your app |
+| `variant` | `auto` or any of the 12 lowercase form names | `auto` | Visual identity, independent of activity |
 | `size` | `16`–`800` CSS pixels | `160` | Rendered diameter |
-| `speed` | `0`–`3` | `1` | Motion clock multiplier |
-| `intensity` | `0`–`1.5` | `0.8` | How strongly the form deforms or moves |
-| `theme` | `dark`, `light` | `dark` | Contrast for the surface behind the orb |
-| `color` | Six-digit hex, e.g. `#88ccaa` | Form palette | Override the form's accent color |
+| `speed` | `0`–`3` | `1` | Motion rate |
+| `intensity` | `0`–`1.5` | `0.8` | Strength of the form's movement |
+| `theme` | `dark`, `light` | `dark` | Contrast for the surrounding surface |
+| `color` | Six-digit hex, e.g. `#88ccaa` | Form palette | Accent color override |
 | `paused` | Boolean attribute | Off | Pause while preserving the current frame |
-| `interactive` | Boolean attribute | Off | Let pointer movement tilt the form |
+| `interactive` | Boolean attribute | Off | Enable pointer-driven tilt |
 
-`variant="auto"` maps the six states to Fold, Trace, Tide, Loom, Link, and Bloom. Explicit variants retain their geometry when the state changes. See [the complete integration guide](veyl.md) for properties, lifecycle, React/SSR, Vue, TypeScript, accessibility, and reduced-motion behavior.
+The element also exposes properties for state, variant, size, speed, intensity, and paused. TypeScript element types are included in the package.
 
-## Design and activity semantics
+## Framework notes
 
-- Keep the status text visible beside a decorative orb; the orb does not replace useful agent feedback.
-- Bind `state` to the host application's actual activity. Veyl does not start tools, infer completion, or simulate progress.
-- The `listening` form is a synthetic visual envelope. It does not request microphone access or analyze audio.
-- Use `aria-hidden="true"` when adjacent text already names the activity; otherwise the custom element exposes an image role and accessible label.
-- The renderer honors `prefers-reduced-motion`, pauses work while offscreen or when the document is hidden, and releases observers when removed.
+### React
 
-## Project files
+Import once from a client-only module (or use a client-side effect when your framework renders on the server):
 
-```text
-index.html              Interactive gallery and playground
-src/veyl.js             Standalone Web Component renderer
-src/main.js             Gallery interactions and live examples
-types/index.d.ts        TypeScript element and attribute types
-examples/quick-start.html  Minimal working integration example
-veyl.md                 Full integration and accessibility guide
+```jsx
+'use client';
+import 'veyl.dev';
+
+export function AgentStatus({ state, label }) {
+  return (
+    <div role="status" aria-live="polite">
+      <veyl-signal state={state} variant="echo" size="32" aria-hidden="true" />
+      <span>{label}</span>
+    </div>
+  );
+}
 ```
 
-## Status
+### Vue
 
-The source and gallery are open under the MIT License. The `veyl` package is **not published to npm**; copy the single component file from this repository into your app. Package-manager installation and versioned releases are not available yet.
+Import `veyl.dev` in the client entry and configure Vue to treat `veyl-signal` as a custom element:
 
-## Contributing
+```js
+// vite.config.js
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
 
-Issues and pull requests are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) before proposing a change. Please include the browser, affected form/state, and a short recording or screenshot for visual changes.
+export default defineConfig({
+  plugins: [vue({
+    template: { compilerOptions: { isCustomElement: (tag) => tag === 'veyl-signal' } }
+  })]
+});
+```
 
-## License and inspiration
+```html
+<veyl-signal :state="agentState" variant="echo" size="32" aria-hidden="true"></veyl-signal>
+```
+
+## Accessibility and behavior
+
+- Keep visible status text; the orb is a supporting visual, not a replacement for useful feedback.
+- Bind `state` to actual application activity. Veyl does not start tools, infer completion, or fabricate progress.
+- `listening` is a synthetic visual form. It does not request microphone access or analyze audio.
+- Hide the orb from assistive technology with `aria-hidden="true"` when nearby text already names the activity. Otherwise it exposes an image role and accessible label.
+- Respects `prefers-reduced-motion`, suspends redraw while offscreen or when the document is hidden, and releases observers when removed.
+
+## Explore the gallery
+
+```bash
+git clone https://github.com/JJongyn/veyl.dev.git
+cd veyl.dev
+npm run dev
+```
+
+Open <http://localhost:4174> to explore all twelve forms and the live playground. The gallery itself has no build step.
+
+- [Integration guide](veyl.md)
+- [Quick start example](examples/quick-start.html)
+- [Changelog](CHANGELOG.md)
+- [Contributing](CONTRIBUTING.md)
+
+## License
 
 MIT. See [LICENSE](LICENSE).
 
-The component-gallery interaction was inspired by [Libraries.dev Orbs](https://libraries.dev/orbs). Veyl's identity, page design, geometry, renderer, and code are original; no Libraries.dev code or assets are included.
+Inspired by [Libraries.dev Orbs](https://libraries.dev/orbs). Veyl's identity, page design, geometry, renderer, and code are original; no Libraries.dev code or assets are included.
