@@ -1,0 +1,26 @@
+{
+  "name": "veyl",
+  "version": "0.3.0",
+  "private": true,
+  "description": "Twelve procedural signal orbs for AI interfaces",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JJongyn/veyl.dev.git"
+  },
+  "homepage": "https://github.com/JJongyn/veyl.dev#readme",
+  "bugs": {
+    "url": "https://github.com/JJongyn/veyl.dev/issues"
+  },
+  "exports": {
+    ".": {
+      "types": "./types/index.d.ts",
+      "default": "./src/veyl.js"
+    }
+  },
+  "files": ["src/veyl.js", "types", "veyl.md", "README.md", "LICENSE"],
+  "scripts": {
+    "dev": "python3 -m http.server 4174 --bind 127.0.0.1"
+  }
+}

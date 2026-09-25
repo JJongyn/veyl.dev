@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>Veyl quick start</title>
+  <style>
+    :root { color-scheme: dark; font: 16px/1.5 system-ui, sans-serif; background: #111413; color: #edf0e9; }
+    body { max-width: 680px; margin: 12vh auto; padding: 0 24px; }
+    .activity { display: flex; align-items: center; gap: 14px; min-height: 88px; padding: 20px; border: 1px solid #303a33; border-radius: 14px; background: #171b19; }
+    .activity strong { display: block; font-size: 14px; }
+    .activity small { color: #a0aaa0; }
+    label { display: flex; gap: 10px; align-items: center; margin: 26px 0; color: #b9c2b9; }
+    select { padding: 9px 12px; border: 1px solid #303a33; border-radius: 7px; background: #171b19; color: inherit; }
+    code { color: #d4eba9; }
+  </style>
+  <script defer src="../src/veyl.js"></script>
+</head>
+<body>
+  <p>VEYL.DEV · QUICK START</p>
+  <h1>A signal beside the status.</h1>
+  <p>Choose a real agent activity to see its visual response. This demo does not run an agent.</p>
+
+  <label for="state">Demo activity
+    <select id="state">
+      <option value="thinking">Thinking</option>
+      <option value="searching">Searching</option>
+      <option value="listening">Listening</option>
+      <option value="composing">Composing</option>
+      <option value="connecting">Connecting</option>
+      <option value="complete">Complete</option>
+    </select>
+  </label>
+
+  <div class="activity" role="status" aria-live="polite">
+    <veyl-signal id="signal" state="thinking" variant="reactor" size="48" aria-hidden="true"></veyl-signal>
+    <div><strong id="status-label">Thinking through your request</strong><small>Activity is supplied by the host app.</small></div>
+  </div>
+
+  <p>Drop in the component, then bind its <code>state</code> to your application's real status.</p>
+  <script>
+    const labels = {
+      thinking: 'Thinking through your request',
+      searching: 'Searching for a useful signal',
+      listening: 'Listening for your input',
+      composing: 'Composing a response',
+      connecting: 'Connecting the pieces',
+      complete: 'The task is complete'
+    };
+    const picker = document.querySelector('#state');
+    picker.addEventListener('change', () => {
+      document.querySelector('#signal').state = picker.value;
+      document.querySelector('#status-label').textContent = labels[picker.value];
+    });
+  </script>
+</body>
+</html>
